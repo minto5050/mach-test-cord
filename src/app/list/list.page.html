@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="warning">
+    <ion-title>Notes List </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    animated
+    (ionChange)="onInput($event)"
+    placeholder="Search by title"
+  ></ion-searchbar>
+
+  <ion-label class="sort">Sort By</ion-label>
+
+  <ion-segment>
+    <ion-segment-button value="Name" (click)="segmentChanged('title')">
+      <ion-label>Title</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="Email" (click)="segmentChanged('content')">
+      <ion-label>Content</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-button (click)="Createnote()" color="success">
+    <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+    &nbsp;Create Note
+  </ion-button>
+
+  <div *ngIf="!empty">
+    <ion-card *ngFor="let note of noteList">
+      <ion-item class="ion-activated">
+        <ion-label>Title</ion-label>
+        <ion-label>{{note.title}}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Content</ion-label>
+        <ion-label>{{note.content}}</ion-label>
+      </ion-item>
+
+      <ion-button (click)="Deletenote(note.id)" color="danger">
+        <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
+        &nbsp;Delete
+      </ion-button>
+
+      <ion-button (click)="Updatenote(note.id)" class="update">
+        <ion-icon size="small" slot="icon-only" name="pencil"></ion-icon>
+        &nbsp;Update
+      </ion-button>
+    </ion-card>
+  </div>
+  <div *ngIf="empty">
+    <p>No note</p>
+  </div>
+</ion-content>
